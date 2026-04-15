@@ -1,14 +1,32 @@
-# render.yaml
+# render.yaml - Deployment configuration for Render.com
 services:
   - type: web
     name: brain-checker-api
     runtime: python311
     plan: free
+    
+    # Build command - install dependencies
     buildCommand: |
-      pip install --upgrade pip && \
-      pip install -r backend/requirements.txt
-    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+      pip install --upgrade pip setuptools wheel && \
+      pip install --no-cache-dir -r backend/requirements.txt
+    
+    # Start command - run the FastAPI server
+    startCommand: |
+      cd /opt/render/project/src && \
+      uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    
+    # Environment variables
     envVars:
       - key: OPENROUTER_API_KEY
         scope: run
         sync: false
+      - key: PORT
+        value: 8000
+      - key: PYTHON_VERSION
+        value: 3.11
+    
+    # Health check
+    healthCheckPath: "/"
+    
+    # Auto deploy on push
+    autoDeploy: true
