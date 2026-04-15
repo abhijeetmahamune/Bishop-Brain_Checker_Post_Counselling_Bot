@@ -5,15 +5,13 @@ services:
     runtime: python311
     plan: free
     
-    # Build command - install dependencies
+    # Build command - install dependencies avoiding Rust compilation
     buildCommand: |
       pip install --upgrade pip setuptools wheel && \
-      pip install --no-cache-dir -r backend/requirements.txt
+      pip install --no-cache-dir --prefer-binary -r backend/requirements.txt
     
     # Start command - run the FastAPI server
-    startCommand: |
-      cd /opt/render/project/src && \
-      uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    startCommand: python backend/main.py
     
     # Environment variables
     envVars:
@@ -22,8 +20,8 @@ services:
         sync: false
       - key: PORT
         value: 8000
-      - key: PYTHON_VERSION
-        value: 3.11
+      - key: PYTHONUNBUFFERED
+        value: 1
     
     # Health check
     healthCheckPath: "/"
