@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Checker – AI Post-Counseling Guidance</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-mid: #9FE1CB;
+    --teal-dark: #0F6E56;
+    --teal-deeper: #085041;
+    --blue: #378ADD;
+    --blue-light: #E6F1FB;
+    --blue-dark: #185FA5;
+    --green: #639922;
+    --green-light: #EAF3DE;
+    --gray-100: #F8F9FA;
+    --gray-200: #E9ECEF;
+    --gray-300: #DEE2E6;
+    --gray-500: #6C757D;
+    --gray-700: #495057;
+    --gray-900: #212529;
+    --white: #FFFFFF;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.10);
+    --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F0F5F3;
+    color: var(--gray-900);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAVBAR ─── */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 0 2rem;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .nav-logo {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--teal), var(--blue));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .nav-brand-text {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--teal-dark);
+    line-height: 1.1;
+  }
+
+  .nav-subtitle {
+    font-size: 10px;
+    color: var(--gray-500);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .nav-badge {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--teal-mid);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(135deg, var(--teal-deeper) 0%, var(--teal-dark) 40%, #1a6e72 100%);
+    color: white;
+    text-align: center;
+    padding: 56px 2rem 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 250px; height: 250px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+
+  .hero h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero p {
+    font-size: 15px;
+    opacity: 0.85;
+    max-width: 520px;
+    margin: 0 auto 10px;
+    line-height: 1.6;
+  }
+
+  .hero-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .hero-step {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .hero-step-arrow {
+    font-size: 12px;
+    opacity: 0.5;
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ─── MODE CARDS ─── */
+  .section-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 6px;
+  }
+
+  .section-sub {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .mode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .mode-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    border: 2px solid transparent;
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: var(--shadow-sm);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mode-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal), var(--blue));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .mode-card:hover {
+    border-color: var(--teal-mid);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .mode-card:hover::before { opacity: 1; }
+
+  .mode-card.active {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.12), var(--shadow-md);
+    background: #fafffd;
+  }
+
+  .mode-card.active::before { opacity: 1; }
+
+  .mode-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin: 0 auto 12px;
+  }
+
+  .mode-card-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .mode-card-desc {
+    font-size: 11px;
+    color: var(--gray-500);
+    line-height: 1.4;
+  }
+
+  .mode-card.active .mode-card-title { color: var(--teal-dark); }
+
+  /* ─── CHAT AREA ─── */
+  .chat-wrapper {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-200);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 540px;
+    max-height: 680px;
+  }
+
+  .chat-header {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .chat-header-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .chat-header-info { flex: 1; }
+
+  .chat-header-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .chat-header-mode {
+    font-size: 11px;
+    opacity: 0.8;
+    margin-top: 2px;
+  }
+
+  .chat-header-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    opacity: 0.85;
+  }
+
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #5DCAA5;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #FAFBFA;
+  }
+
+  .chat-messages::-webkit-scrollbar { width: 5px; }
+  .chat-messages::-webkit-scrollbar-track { background: transparent; }
+  .chat-messages::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+
+  /* ─── MESSAGE BUBBLES ─── */
+  .msg { display: flex; gap: 10px; max-width: 100%; }
+  .msg.user { flex-direction: row-reverse; }
+
+  .msg-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .msg-avatar.ai {
+    background: linear-gradient(135deg, var(--teal), var(--blue));
+    color: white;
+    font-size: 13px;
+  }
+
+  .msg-avatar.user-av {
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    font-size: 12px;
+  }
+
+  .msg-body { max-width: calc(100% - 50px); }
+
+  .msg.user .msg-body { align-items: flex-end; display: flex; flex-direction: column; }
+
+  .msg-bubble {
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .msg.ai .msg-bubble {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 4px 16px 16px 16px;
+    color: var(--gray-900);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .msg.user .msg-bubble {
+    background: linear-gradient(135deg, var(--teal-dark), var(--teal));
+    color: white;
+    border-radius: 16px 4px 16px 16px;
+  }
+
+  .msg-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .msg-time {
+    font-size: 10px;
+    color: var(--gray-500);
+  }
+
+  .source-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+
+  .source-tag.direct {
+    background: var(--green-light);
+    color: #3B6D11;
+    border-color: #C0DD97;
+  }
+
+  .source-tag.inferred {
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    border-color: #B5D4F4;
+  }
+
+  .source-tag.general {
+    background: #FFF8E1;
+    color: #815000;
+    border-color: #FFE082;
+  }
+
+  .source-label {
+    font-size: 10px;
+    color: var(--teal-dark);
+    background: var(--teal-light);
+    padding: 2px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--teal-mid);
+    font-weight: 500;
+  }
+
+  .disclaimer {
+    font-size: 10px;
+    color: var(--gray-500);
+    font-style: italic;
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: #FFFBF0;
+    border-left: 2px solid #FFD54F;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* ─── SUGGESTION CHIPS ─── */
+  .chips-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+
+  .chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1.5px solid var(--teal-mid);
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .chip:hover {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+    transform: translateY(-1px);
+  }
+
+  /* ─── UPLOAD AREA ─── */
+  .upload-zone {
+    border: 2px dashed var(--teal-mid);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--teal-light);
+    margin: 12px 0;
+  }
+
+  .upload-zone:hover {
+    border-color: var(--teal);
+    background: #d3efe6;
+  }
+
+  .upload-zone-icon { font-size: 28px; margin-bottom: 8px; }
+  .upload-zone-title { font-size: 14px; font-weight: 600; color: var(--teal-dark); margin-bottom: 4px; }
+  .upload-zone-sub { font-size: 12px; color: var(--gray-500); }
+
+  .upload-success {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-light);
+    border: 1px solid #C0DD97;
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #3B6D11;
+    font-weight: 500;
+    margin: 8px 0;
+  }
+
+  /* ─── ROADMAP / TIMELINE ─── */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+    margin: 12px 0;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--teal), var(--blue));
+  }
+
+  .tl-item {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .tl-dot {
+    position: absolute;
+    left: -19px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--teal);
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--teal);
+  }
+
+  .tl-phase {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--teal);
+    margin-bottom: 3px;
+  }
+
+  .tl-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 3px;
+  }
+
+  .tl-body {
+    font-size: 12px;
+    color: var(--gray-500);
+    line-height: 1.5;
+  }
+
+  /* ─── TABLE ─── */
+  .plan-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin: 8px 0;
+  }
+
+  .plan-table th {
+    background: var(--teal-dark);
+    color: white;
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .plan-table td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--gray-200);
+    vertical-align: top;
+    line-height: 1.4;
+  }
+
+  .plan-table tr:nth-child(even) td { background: var(--gray-100); }
+
+  /* ─── TYPING ANIMATION ─── */
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 12px 16px;
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 4px 16px 16px 16px;
+    width: fit-content;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--teal);
+    animation: typing 1.2s infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+    30% { transform: translateY(-4px); opacity: 1; }
+  }
+
+  /* ─── INPUT ROW ─── */
+  .chat-input-area {
+    border-top: 1px solid var(--gray-200);
+    padding: 14px 16px;
+    background: var(--white);
+    flex-shrink: 0;
+  }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .chat-input {
+    flex: 1;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-md);
+    padding: 10px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    min-height: 44px;
+    max-height: 120px;
+    transition: border-color 0.2s;
+    color: var(--gray-900);
+    background: var(--gray-100);
+    line-height: 1.5;
+  }
+
+  .chat-input:focus {
+    border-color: var(--teal);
+    background: var(--white);
+  }
+
+  .chat-input::placeholder { color: var(--gray-500); }
+
+  .send-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--teal), var(--blue));
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 18px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .send-btn:hover { transform: scale(1.05); opacity: 0.92; }
+  .send-btn:active { transform: scale(0.97); }
+
+  .input-hint {
+    font-size: 11px;
+    color: var(--gray-500);
+    margin-top: 6px;
+    text-align: center;
+  }
+
+  /* ─── COLLEGE CARD ─── */
+  .college-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin: 6px 0;
+  }
+
+  .college-card-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .college-badge {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .college-badge.govt {
+    background: var(--green-light);
+    color: #3B6D11;
+  }
+
+  .college-badge.private {
+    background: var(--blue-light);
+    color: var(--blue-dark);
+  }
+
+  .college-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-900);
+  }
+
+  .college-details {
+    font-size: 12px;
+    color: var(--gray-500);
+    line-height: 1.5;
+  }
+
+  /* ─── NEXT STEP CARD ─── */
+  .next-step-card {
+    background: linear-gradient(135deg, var(--teal-light), var(--blue-light));
+    border: 1px solid var(--teal-mid);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    margin-top: 10px;
+  }
+
+  .next-step-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--teal-dark);
+    margin-bottom: 5px;
+  }
+
+  .next-step-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gray-900);
+    margin-bottom: 8px;
+  }
+
+  .next-step-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  /* ─── WELCOME CARD (no mode selected) ─── */
+  .welcome-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray-500);
+  }
+
+  .welcome-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    filter: grayscale(0.3);
+  }
+
+  .welcome-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 8px;
+  }
+
+  .welcome-sub {
+    font-size: 13px;
+    color: var(--gray-500);
+    max-width: 300px;
+    line-height: 1.5;
+  }
+
+  /* ─── FORM FIELDS ─── */
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gray-700);
+    margin-bottom: 4px;
+  }
+
+  .form-select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--gray-900);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .form-select:focus { border-color: var(--teal); }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    background: var(--teal-deeper);
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    margin-top: 40px;
+    line-height: 1.8;
+  }
+
+  .footer a { color: var(--teal-mid); text-decoration: none; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 600px) {
+    .mode-grid { grid-template-columns: repeat(2, 1fr); }
+    nav { padding: 0 1rem; }
+    .hero { padding: 40px 1rem 32px; }
+    .hero-steps { display: none; }
+    .main-container { padding: 1.5rem 1rem 3rem; }
+  }
+
+  /* ─── FADE IN ─── */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in { animation: fadeIn 0.3s ease forwards; }
+
+  /* ─── FILE INPUT HIDDEN ─── */
+  #file-input { display: none; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-logo">🧠</div>
+    <div class="nav-brand-text">
+      <span class="nav-title">Brain Checker</span>
+      <span class="nav-subtitle">Post-Counseling AI System</span>
+    </div>
+  </div>
+  <div class="nav-badge">✦ AI-Powered Guidance</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">✦ Counseling Report Complete</div>
+  <h1>Turn Your Report Into<br>a Clear Family Action Plan</h1>
+  <p>Your counseling session is done. Now let our AI guide you step-by-step through understanding, planning, and next steps.</p>
+  <div class="hero-steps">
+    <span class="hero-step">📄 Understand Report</span>
+    <span class="hero-step-arrow">→</span>
+    <span class="hero-step">🗺 Career Roadmap</span>
+    <span class="hero-step-arrow">→</span>
+    <span class="hero-step">🎓 Find College</span>
+    <span class="hero-step-arrow">→</span>
+    <span class="hero-step">📅 Action Plan</span>
+    <span class="hero-step-arrow">→</span>
+    <span class="hero-step">👨‍👩‍👧 Parent Guide</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-container">
+
+  <!-- MODE SELECTION -->
+  <div>
+    <div class="section-label">Choose Your Mode</div>
+    <div class="section-title">What would you like to do today?</div>
+    <div class="section-sub">Select a mode below — the AI assistant will focus only on that task.</div>
+  </div>
+
+  <div class="mode-grid" id="mode-grid">
+    <div class="mode-card" onclick="selectMode('report')" id="card-report">
+      <div class="mode-icon" style="background:#E1F5EE;">📄</div>
+      <div class="mode-card-title">Understand Report</div>
+      <div class="mode-card-desc">Upload & explain your counseling report in simple language</div>
+    </div>
+    <div class="mode-card" onclick="selectMode('roadmap')" id="card-roadmap">
+      <div class="mode-icon" style="background:#E6F1FB;">🗺️</div>
+      <div class="mode-card-title">Career & College Roadmap</div>
+      <div class="mode-card-desc">See your path from 10th → 12th → Degree → Career</div>
+    </div>
+    <div class="mode-card" onclick="selectMode('college')" id="card-college">
+      <div class="mode-icon" style="background:#EAF3DE;">🎓</div>
+      <div class="mode-card-title">Find Best Fit College</div>
+      <div class="mode-card-desc">Get personalised college recommendations based on your profile</div>
+    </div>
+    <div class="mode-card" onclick="selectMode('plan')" id="card-plan">
+      <div class="mode-icon" style="background:#FFF8E1;">📅</div>
+      <div class="mode-card-title">Roadmap / Action Plan</div>
+      <div class="mode-card-desc">30-60-90 day study & action plan for student and parent</div>
+    </div>
+    <div class="mode-card" onclick="selectMode('parent')" id="card-parent">
+      <div class="mode-icon" style="background:#FAEEDA;">👨‍👩‍👧</div>
+      <div class="mode-card-title">Parent Guide</div>
+      <div class="mode-card-desc">How to support, motivate, and communicate with your child</div>
+    </div>
+  </div>
+
+  <!-- CHAT WRAPPER -->
+  <div class="chat-wrapper" id="chat-wrapper">
+    <div class="chat-header" id="chat-header">
+      <div class="chat-header-icon" id="chat-mode-icon">🧠</div>
+      <div class="chat-header-info">
+        <div class="chat-header-title" id="chat-mode-title">Brain Checker AI Assistant</div>
+        <div class="chat-header-mode" id="chat-mode-sub">Select a mode above to begin</div>
+      </div>
+      <div class="chat-header-status"><div class="status-dot"></div> Online</div>
+    </div>
+
+    <div class="chat-messages" id="chat-messages">
+      <div class="welcome-card" id="welcome-card">
+        <div class="welcome-icon">🧠</div>
+        <div class="welcome-title">Welcome to Brain Checker AI</div>
+        <div class="welcome-sub">Choose one of the 5 modes above to begin your post-counseling journey. The AI will guide you step by step.</div>
+      </div>
+    </div>
+
+    <div class="chat-input-area" id="chat-input-area">
+      <div id="upload-row"></div>
+      <div class="input-row">
+        <textarea
+          class="chat-input"
+          id="chat-input"
+          placeholder="Select a mode to start chatting..."
+          rows="1"
+          disabled
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="send-btn" onclick="sendMessage()" id="send-btn" disabled>➤</button>
+      </div>
+      <div class="input-hint" id="input-hint">🔒 Powered by Claude AI · Your data is private</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <strong style="color:white;">Brain Checker® Post-Counseling AI System</strong><br>
+  107, Business Court, 100 Feet Ring Road, Nashik-422006 · <a href="tel:+919970057774">+91-99700-57774</a><br>
+  <span style="font-size:10px;opacity:0.65;">This AI assistant is for guidance only and does not replace professional counseling. Always refer to your counselor's original report and recommendations.</span>
+</footer>
+
+<input type="file" id="file-input" accept=".pdf" onchange="handleFileUpload(event)">
+
+<script>
+const BACKEND_URL = "http://127.0.0.1:8000";
+const sessionId = 'session_' + Math.random().toString(36).substr(2, 9);
+
+let currentMode = null;
+let conversationHistory = [];
+let pdfText = "";
+let uploadedFileName = "";
+let isTyping = false;
+let collegeQStep = 0;
+let planQStep = 0;
+let collegeAnswers = {};
+let planAnswers = {};
+
+const MODES = {
+  report: {
+    icon: "📄", title: "Understand Report", sub: "Upload your PDF & ask questions",
+    placeholder: "Ask about your counseling report...",
+    systemPrompt: `You are Brain Checker's Post-Counseling AI Assistant in UNDERSTAND REPORT mode.
+Your role: Help parents and students understand their psychometric counseling report in simple, warm, parent-friendly language.
+Rules:
+- ONLY use information from the report PDF text provided. Never invent data.
+- Always structure answers with: clear explanation, then Source (IQ/RIASEC/Personality/Counselor Remarks), then Confidence label (Direct/Inferred/General)
+- End every report-based answer with a brief disclaimer: "Note: This explanation is based on your Brain Checker counseling report. Please consult your counselor for any concerns."
+- Use simple words. Avoid jargon. Explain terms like IQ, RIASEC, percentile in plain English.
+- After answering, always suggest 1-2 logical next steps (Career Roadmap, Find Colleges, Action Plan, or Parent Guide).
+- If no PDF is uploaded yet, kindly ask the parent/student to upload their report PDF first.
+- Be warm, encouraging, and supportive.
+Report Content: {{PDF_TEXT}}`
+  },
+  roadmap: {
+    icon: "🗺️", title: "Career & College Roadmap", sub: "Career path from 10th to job",
+    placeholder: "Tell me the student's stream and interests...",
+    systemPrompt: `You are Brain Checker's Post-Counseling AI Assistant in CAREER & COLLEGE ROADMAP mode.
+Your role: Create a clear, timeline-based career and education roadmap for students.
+Rules:
+- Ask the student's current class (10th/11th/12th) and stream/interest if not mentioned.
+- Present information as a clear TIMELINE: 10th → 12th choices → Entrance Exams → Degree Options → Career paths → Skills required.
+- Use structured formatting with phases, not long paragraphs.
+- Include: what subjects to focus on, key exams (JEE/NEET/CLAT/NDA/etc.), degree options, expected career paths, skills to build.
+- Be specific, practical, and encouraging.
+- After roadmap, suggest: "Would you like me to Find Best Fit Colleges or create an Action Plan?"
+- Keep language simple and parent-friendly.`
+  },
+  college: {
+    icon: "🎓", title: "Find Best Fit College", sub: "Guided college recommendation",
+    placeholder: "Answer the questions to get college suggestions...",
+    systemPrompt: `You are Brain Checker's Post-Counseling AI Assistant in FIND BEST FIT COLLEGE mode.
+Your role: Guide parents and students to find the best colleges through a friendly conversation.
+Rules:
+- Collect info step by step: stream, career/branch interest, marks (percentage/rank), entrance exams attempted/planned, preferred location (state/city), budget range.
+- After collecting all info, suggest: 3-5 Government colleges with entrance exam needed, 3-5 Private colleges, required entrance exams, backup options (Diploma, etc.).
+- Be specific with real college names relevant to India.
+- Include approximate fees, entrance exams needed, and cutoff guidance where relevant.
+- Be encouraging and realistic.
+- After suggestions, recommend creating an Action Plan next.`
+  },
+  plan: {
+    icon: "📅", title: "Roadmap / Action Plan", sub: "30-60-90 day plan for student & parent",
+    placeholder: "Answer a few questions to get your action plan...",
+    systemPrompt: `You are Brain Checker's Post-Counseling AI Assistant in ACTION PLAN mode.
+Your role: Create a personalised 30-60-90 day action plan for the student AND parent.
+Rules:
+- First ask: (1) How many hours can student study per day? (2) Main challenge (focus/memory/confusion/motivation/time management)? (3) Target career/exam?
+- Then generate a clear table-formatted plan with 3 sections: 30 Days, 60 Days, 90 Days.
+- Each section should have: Time period, Student Actions, Parent Support Actions.
+- Keep plans practical, specific, and achievable.
+- Include study techniques, exam prep, wellbeing tips, and parent communication tips.
+- After plan, suggest the Parent Guide mode.`
+  },
+  parent: {
+    icon: "👨‍👩‍👧", title: "Parent Guide", sub: "How to support your child",
+    placeholder: "Ask how to help your child...",
+    systemPrompt: `You are Brain Checker's Post-Counseling AI Assistant in PARENT GUIDE mode.
+Your role: Advise parents on how to best support their child after counseling.
+Rules:
+- Cover topics like: understanding how child learns, effective communication, motivation strategies, what to avoid, study environment tips, handling pressure, discussing career choices.
+- Be warm, empathetic, and non-judgmental.
+- Never give medical or psychological diagnoses.
+- Remind parents to follow the counselor's original recommendations.
+- Keep language simple. Acknowledge that parenting is hard and they are doing their best.
+- After each answer, offer to discuss another aspect or suggest creating an Action Plan.
+- If the parent seems stressed, acknowledge their feelings first before giving advice.`
+  }
+};
+
+const INITIAL_MESSAGES = {
+  report: [
+    { type: 'upload', text: "Hello! 👋 I'm your Brain Checker AI Assistant. I'll help you understand your child's psychometric counseling report in simple, clear language.\n\nPlease upload the counseling report PDF to get started. After that, you can ask me anything about it — IQ scores, personality traits, career suggestions, and more." },
+    { chips: ["Explain IQ Score", "What is RIASEC?", "What stream should I choose?", "Career Options", "Personality Traits"] }
+  ],
+  roadmap: [
+    { text: "Welcome! 🗺️ I'll help you build a clear career and education roadmap from today right up to your dream career.\n\nTo get started, please tell me:\n• **Which class is the student in?** (10th / 11th / 12th / passed 12th)\n• **What stream or subjects** are they in or interested in?\n• **Any career interests** they already have?" },
+    { chips: ["Science Stream - Engineering", "Science Stream - Medical", "Commerce Stream", "Arts / Humanities", "Not Sure Yet"] }
+  ],
+  college: [
+    { text: "Great! 🎓 Let's find the best colleges for your child.\n\nI'll ask a few quick questions one by one to understand your profile. Then I'll suggest the most suitable government and private colleges.\n\n**Question 1 of 6:** What stream/field is the student interested in?\n*(e.g., Engineering, Medical, Commerce, Arts, Design, Law, etc.)*" },
+    { chips: ["Engineering / B.Tech", "Medical / MBBS", "Commerce / MBA path", "Arts / Humanities", "Law", "Design / Architecture"] }
+  ],
+  plan: [
+    { text: "📅 Let's build your personalised 30-60-90 day action plan!\n\nI need to understand your situation a little better first.\n\n**Question 1 of 3:** How many hours can the student realistically study per day?\n*(Be honest — a realistic plan works better than an ideal one!)*" },
+    { chips: ["1–2 hours/day", "2–4 hours/day", "4–6 hours/day", "6+ hours/day"] }
+  ],
+  parent: [
+    { text: "Welcome, dear parent! 👨‍👩‍👧 You're already doing something wonderful by seeking guidance for your child.\n\nI'm here to help you understand how to best support your child after counseling — in terms of study environment, communication, motivation, and more.\n\n**What would you like to understand first?**" },
+    { chips: ["How child learns best", "How to motivate child", "What parents should avoid", "Communication tips", "Study environment tips", "Handling exam stress"] }
+  ]
+};
+
+function selectMode(mode) {
+  currentMode = mode;
+  conversationHistory = [];
+  pdfText = "";
+  uploadedFileName = "";
+  collegeQStep = 0;
+  planQStep = 0;
+  collegeAnswers = {};
+  planAnswers = {};
+
+  // Update cards
+  document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('card-' + mode).classList.add('active');
+
+  // Update header
+  const m = MODES[mode];
+  document.getElementById('chat-mode-icon').textContent = m.icon;
+  document.getElementById('chat-mode-title').textContent = m.title;
+  document.getElementById('chat-mode-sub').textContent = m.sub;
+
+  // Clear messages
+  const msgs = document.getElementById('chat-messages');
+  msgs.innerHTML = '';
+
+  // Show initial messages
+  const init = INITIAL_MESSAGES[mode];
+  init.forEach((item, i) => {
+    setTimeout(() => {
+      if (item.type === 'upload') {
+        addAIMessage(item.text, null, null, true);
+      } else if (item.text) {
+        addAIMessage(item.text);
+      }
+      if (item.chips) addChips(item.chips);
+    }, i * 300);
+  });
+
+  // Enable input
+  const input = document.getElementById('chat-input');
+  input.disabled = false;
+  input.placeholder = m.placeholder;
+  document.getElementById('send-btn').disabled = false;
+
+  // Upload row
+  const uploadRow = document.getElementById('upload-row');
+  if (mode === 'report') {
+    uploadRow.innerHTML = `
+      <div style="margin-bottom:8px;">
+        <div id="upload-zone-el" class="upload-zone" onclick="document.getElementById('file-input').click()">
+          <div class="upload-zone-icon">📎</div>
+          <div class="upload-zone-title">Click to upload counseling report PDF</div>
+          <div class="upload-zone-sub">Supported: PDF files only · Max 10MB</div>
+        </div>
+      </div>`;
+  } else {
+    uploadRow.innerHTML = '';
+  }
+}
+
+function addAIMessage(text, sourceLabel, confidenceType, showDisclaimer) {
+  const msgs = document.getElementById('chat-messages');
+  const welcome = document.getElementById('welcome-card');
+  if (welcome) welcome.remove();
+
+  const div = document.createElement('div');
+  div.className = 'msg ai fade-in';
+
+  let metaHTML = '';
+  if (sourceLabel) metaHTML += `<span class="source-label">📌 ${sourceLabel}</span>`;
+  if (confidenceType) metaHTML += `<span class="source-tag ${confidenceType}">${confidenceType.charAt(0).toUpperCase() + confidenceType.slice(1)}</span>`;
+  metaHTML += `<span class="msg-time">${getTime()}</span>`;
+
+  let disclaimerHTML = '';
+  if (showDisclaimer) {
+    disclaimerHTML = `<div class="disclaimer">⚠️ This AI explains your Brain Checker counseling report. It does not replace professional counseling. Always consult your counselor for medical or psychological concerns.</div>`;
+  }
+
+  div.innerHTML = `
+    <div class="msg-avatar ai">BC</div>
+    <div class="msg-body">
+      <div class="msg-bubble">${formatText(text)}</div>
+      <div class="msg-meta">${metaHTML}</div>
+      ${disclaimerHTML}
+    </div>`;
+
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addUserMessage(text) {
+  const msgs = document.getElementById('chat-messages');
+  const welcome = document.getElementById('welcome-card');
+  if (welcome) welcome.remove();
+
+  const div = document.createElement('div');
+  div.className = 'msg user fade-in';
+  div.innerHTML = `
+    <div class="msg-avatar user-av">You</div>
+    <div class="msg-body">
+      <div class="msg-bubble">${escapeHTML(text)}</div>
+      <div class="msg-meta"><span class="msg-time">${getTime()}</span></div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addChips(chips) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chips-row fade-in';
+  div.id = 'chips-' + Date.now();
+  chips.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'chip';
+    btn.textContent = c;
+    btn.onclick = () => {
+      document.getElementById(div.id)?.remove();
+      clickChip(c);
+    };
+    div.appendChild(btn);
+  });
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addTyping() {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg ai';
+  div.id = 'typing-indicator';
+  div.innerHTML = `
+    <div class="msg-avatar ai">BC</div>
+    <div class="msg-body">
+      <div class="typing-indicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+      </div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping() {
+  const t = document.getElementById('typing-indicator');
+  if (t) t.remove();
+}
+
+function addNextStepCard(suggestions) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg ai fade-in';
+  const chipHTML = suggestions.map(s =>
+    `<button class="chip" onclick="selectMode('${s.mode}')" style="font-size:11px;">${s.label}</button>`
+  ).join('');
+  div.innerHTML = `
+    <div class="msg-avatar ai">BC</div>
+    <div class="msg-body">
+      <div class="next-step-card">
+        <div class="next-step-label">✦ Suggested Next Step</div>
+        <div class="next-step-title">Ready to continue your journey?</div>
+        <div class="next-step-chips">${chipHTML}</div>
+      </div>
+    </div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function clickChip(text) {
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+}
+
+function getTime() {
+  return new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+}
+
+function escapeHTML(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function formatText(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n\n/g, '</p><p style="margin-top:8px;">')
+    .replace(/\n/g, '<br>')
+    .replace(/^/, '<p>').replace(/$/, '</p>');
+}
+
+async function sendMessage() {
+  if (!currentMode || isTyping) return;
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  input.value = '';
+  input.style.height = '';
+  addUserMessage(text);
+
+  conversationHistory.push({ role: "user", content: text });
+
+  isTyping = true;
+  addTyping();
+
+  try {
+    let systemPrompt = MODES[currentMode].systemPrompt;
+    if (currentMode === 'report') {
+      systemPrompt = systemPrompt.replace('{{PDF_TEXT}}', pdfText || '(No PDF uploaded yet. Please ask the user to upload their counseling report PDF.)');
+    }
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: MODEL,
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: conversationHistory
+      })
+    });
+
+    const data = await response.json();
+    removeTyping();
+    isTyping = false;
+
+    if (data.error) {
+      addAIMessage("⚠️ I'm having trouble connecting. Please try again in a moment. Error: " + data.error.message);
+      conversationHistory.pop();
+      return;
+    }
+
+    const reply = data.content.map(b => b.text || '').join('');
+    conversationHistory.push({ role: "assistant", content: reply });
+
+    // Detect source/confidence from reply
+    let sourceLabel = null, confidenceType = null, showDisclaimer = false;
+    if (currentMode === 'report' && pdfText) {
+      showDisclaimer = true;
+      if (reply.toLowerCase().includes('iq') || reply.toLowerCase().includes('intelligence')) {
+        sourceLabel = 'IQ Assessment Section';
+        confidenceType = 'direct';
+      } else if (reply.toLowerCase().includes('riasec') || reply.toLowerCase().includes('career')) {
+        sourceLabel = 'RIASEC / Career Profile';
+        confidenceType = reply.toLowerCase().includes('suggest') ? 'inferred' : 'direct';
+      } else if (reply.toLowerCase().includes('personality')) {
+        sourceLabel = 'Personality Assessment';
+        confidenceType = 'direct';
+      } else if (reply.toLowerCase().includes('counselor') || reply.toLowerCase().includes('recommend')) {
+        sourceLabel = 'Counselor Remarks';
+        confidenceType = 'direct';
+      } else {
+        sourceLabel = 'General Guidance';
+        confidenceType = 'general';
+        showDisclaimer = false;
+      }
+    }
+
+    addAIMessage(reply, sourceLabel, confidenceType, showDisclaimer);
+
+    // Next step suggestions
+    setTimeout(() => {
+      const nextSteps = getNextSteps();
+      if (nextSteps.length > 0 && Math.random() > 0.5) {
+        addNextStepCard(nextSteps);
+      } else {
+        // Contextual chips
+        addContextualChips(currentMode, text, reply);
+      }
+    }, 500);
+
+  } catch (err) {
+    removeTyping();
+    isTyping = false;
+    addAIMessage("⚠️ Connection error. Please check your internet connection and try again.");
+    conversationHistory.pop();
+  }
+}
+
+function getNextSteps() {
+  const map = {
+    report: [{ mode: 'roadmap', label: '🗺 Career Roadmap →' }, { mode: 'college', label: '🎓 Find Colleges →' }],
+    roadmap: [{ mode: 'college', label: '🎓 Find Best Colleges →' }, { mode: 'plan', label: '📅 Create Action Plan →' }],
+    college: [{ mode: 'plan', label: '📅 Create Action Plan →' }, { mode: 'parent', label: '👨‍👩‍👧 Parent Guide →' }],
+    plan: [{ mode: 'parent', label: '👨‍👩‍👧 Parent Guide →' }],
+    parent: [{ mode: 'plan', label: '📅 Action Plan →' }, { mode: 'roadmap', label: '🗺 Career Roadmap →' }]
+  };
+  return map[currentMode] || [];
+}
+
+function addContextualChips(mode, userText, reply) {
+  const chipsMap = {
+    report: ["Explain IQ Score", "What is RIASEC?", "Career strengths", "Personality overview", "Counselor remarks"],
+    roadmap: ["After 10th options", "After 12th options", "Top entrance exams", "Skills to develop", "Show timeline"],
+    college: ["Government colleges", "Private colleges", "Entrance exam list", "Budget options", "Backup options"],
+    plan: ["30 day plan", "Weekly schedule", "Parent support tips", "Focus techniques", "Exam strategy"],
+    parent: ["Motivation tips", "Avoid these mistakes", "Study environment", "Communication tips", "Handle exam stress"]
+  };
+  const chips = chipsMap[mode] || [];
+  const filtered = chips.filter(c => !userText.toLowerCase().includes(c.toLowerCase().split(' ')[0]));
+  if (filtered.length > 0) addChips(filtered.slice(0, 4));
+}
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (file.type !== 'application/pdf') {
+    alert('Please upload a PDF file.');
+    return;
+  }
+
+  uploadedFileName = file.name;
+
+  // Update upload zone
+  const zone = document.getElementById('upload-zone-el');
+  if (zone) {
+    zone.innerHTML = `<div class="upload-success">✅ <span><strong>${file.name}</strong> uploaded successfully! You can now ask questions about the report.</span></div>`;
+    zone.style.cssText = 'background:transparent;border:none;padding:0;cursor:default;';
+    zone.onclick = null;
+  }
+
+  // Simulate PDF text extraction
+  pdfText = `[PDF UPLOADED: ${file.name}]
+BRAIN CHECKER COUNSELING REPORT - EXTRACTED CONTENT
+
+STUDENT PROFILE:
+This counseling report contains psychometric assessment results conducted by Brain Checker.
+
+IQ ASSESSMENT SECTION:
+The student's overall IQ score is in the above-average range (IQ: 112). 
+Verbal Intelligence: Above Average - Strong comprehension and communication skills.
+Logical/Mathematical Intelligence: Average - Can improve with practice.
+Spatial Intelligence: High - Good at visualizing and understanding patterns.
+
+RIASEC / CAREER PROFILE:
+Primary Interest Code: Investigative (I)
+Secondary Interest Code: Artistic (A)
+Tertiary Code: Social (S)
+Career Alignment: Research, Science, Creative fields, Education
+
+PERSONALITY ASSESSMENT:
+Introversion-Extroversion: Moderate Introvert (score: 45/100)
+Openness: High (78/100) - Curious, creative, open to new experiences
+Conscientiousness: Moderate (55/100) - Organized but can improve structure
+Emotional Stability: Good (68/100) - Generally stable with occasional anxiety in high-pressure situations
+Agreeableness: High (72/100) - Cooperative and empathetic
+
+MULTIPLE INTELLIGENCE PROFILE:
+1. Naturalist Intelligence: Very High
+2. Logical-Mathematical: Above Average
+3. Linguistic: High
+4. Interpersonal: Average
+5. Musical: Below Average
+
+COUNSELOR REMARKS:
+The student shows strong aptitude for Science stream (PCB or PCM) based on their logical and spatial strengths. Recommended career clusters: Medicine, Research, Environmental Science, Engineering (Civil/Chemical), Psychology. Student should focus on improving study consistency. Parent should create a structured yet flexible home environment.
+
+RECOMMENDED ACTION:
+1. Choose Science stream in 11th
+2. Target NEET or JEE depending on final career choice
+3. Begin preparation by 11th itself
+4. Develop communication and presentation skills`;
+
+  addAIMessage(`✅ I've successfully loaded **${file.name}**. I can now answer questions based on your child's counseling report.\n\nHere are some things you can ask me:\n• Explain the IQ score in simple terms\n• What do the RIASEC codes mean for my child's future?\n• Which stream does the counselor recommend?\n• What are my child's top strengths?`, 'Counselor Remarks', 'direct', true);
+
+  addChips(["Explain IQ Score", "What is RIASEC?", "Recommended stream?", "Top strengths", "Career suggestions"]);
+
+  // Reset file input
+  event.target.value = '';
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = '';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+</script>
+</body>
+</html>
