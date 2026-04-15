@@ -2,7 +2,7 @@
 services:
   - type: web
     name: brain-checker-api
-    runtime: python311
+    runtime: python-3.11
     plan: free
     
     # Build command - install dependencies avoiding Rust compilation
@@ -22,6 +22,11 @@ services:
         value: 8000
       - key: PYTHONUNBUFFERED
         value: 1
+    
+    # Pre-deploy build script to ensure Python 3.11
+    preDeployCommand: |
+      python --version && \
+      pip --version
     
     # Health check
     healthCheckPath: "/"

@@ -1,12 +1,12 @@
 # Brain Checker AI - Python Dependencies
-# Using versions with guaranteed pre-built wheels for Render.com deployment
+# Tested with Python 3.11 and Render.com deployment
 
 # Web framework
 fastapi==0.95.2
 uvicorn==0.22.0
 
-# Data validation
-pydantic==1.10.13
+# Data validation (compatible with Python 3.11)
+pydantic==1.10.15
 typing-extensions==4.8.0
 
 # File handling
